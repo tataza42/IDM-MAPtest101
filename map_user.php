@@ -1,4 +1,56 @@
 
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+@session_start();
+@session_regenerate_id(true);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_token = $_POST['credential'];
+
+    // สร้าง Google Client
+    $client = new Google_Client();
+    $client->setClientId('671830532557-vq7k3osqd0dnvrt3o8r7nlcv6kd5k5aq.apps.googleusercontent.com'); // ใส่ Google Client ID ของคุณ
+    $client->setRedirectUri('http://localhost:8080/map_user.php'); // ตั้งค่าตรงนี้ให้ตรงกับที่ตั้งใน Google Cloud Console
+
+    // ตรวจสอบ Token
+    $payload = $client->verifyIdToken($id_token);
+
+    if ($payload) {
+        $userid = $payload['sub']; // Google ID ของผู้ใช้
+        $email = $payload['email'];
+        $name = $payload['name'];
+        @$profile_picture = $payload['picture']; // URL ของภาพโปรไฟล์
+
+        // เริ่มต้น Session และบันทึกข้อมูลผู้ใช้
+        @session_start();
+        $_SESSION['user'] = [
+            'id' => $userid,
+            'name' => $name,
+            'email' => $email,
+            'picture' => $profile_picture
+        ];
+
+        /*echo "<h1>Welcome, $name!</h1>";
+        echo "<p>Your email is $email.</p>";
+        echo "<img src='$profile_picture' alt='Profile Picture' style='width: 100px; height: 100px; border-radius: 50%;'>";*/
+   
+}
+}
+?>
+<?php
+@session_start(); // ควรเรียกใช้ก่อนการแสดงผล
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+
+
+// ดึงข้อมูลเซสชัน
+$profile_picture = $_SESSION['user']['picture'] ?? 'default_profile.png';
+$name = $_SESSION['user']['name'] ?? 'Guest';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
