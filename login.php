@@ -2,10 +2,10 @@
 session_start();
 
 // การเชื่อมต่อฐานข้อมูล
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "idm_ruts";
+$servername = "d6vscs19jtah8iwb.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	";
+$username = "bmo9xqpvo99gjvvk";
+$password = "uwalyaanmnt76aae";
+$dbname = "t1iaxjfwciix8wld";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
