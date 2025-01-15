@@ -283,7 +283,7 @@ button .button-text {
                      data-client_id="671830532557-vq7k3osqd0dnvrt3o8r7nlcv6kd5k5aq.apps.googleusercontent.com"
                      data-context="signin"
                      data-ux_mode="popup"
-                     data-login_uri="http://localhost:8080/map_user.php"
+                     data-login_uri="https://nsmruts-57d132e5dc24.herokuapp.com/map_user.php"
                      data-auto_prompt="false">
                 </div>
 
